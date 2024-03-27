@@ -1,6 +1,8 @@
-import pytest
 import json
 import tempfile
+from pathlib import Path
+
+import pytest
 
 from my_shop.classes import Category, Product
 from my_shop.utilities import load_data_from_json
@@ -113,3 +115,4 @@ def test_load_data_from_json(json_file):
     assert categories[1].goods[0].price == 123000.0
     assert categories[1].goods[0].description == "Фоновая подсветка"
     assert categories[1].goods[0].quantity_in_stock == 7
+    Path(json_file).unlink()
