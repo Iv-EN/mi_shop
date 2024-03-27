@@ -1,9 +1,10 @@
-import  json
-import  os
-from classes import Category, Product
+import json
+import os
+from .classes import Category, Product
 
 MAIN_PATH = os.path.dirname(__file__)
 OPERATIONS_PATH = os.path.join(MAIN_PATH, 'data', 'products.json')
+
 
 def load_data_from_json(filename):
     """Загружает данные категорий и товаров из файла JSON."""
@@ -27,10 +28,3 @@ def load_data_from_json(filename):
         )
         categories.append(category)
     return categories
-
-if __name__ == '__main__':
-    categories = load_data_from_json(OPERATIONS_PATH)
-    for category in categories:
-        print(category.name, category.description)
-        for product in category.goods:
-            print(product.name, product.price, product.quantity_in_stock)
