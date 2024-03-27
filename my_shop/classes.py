@@ -1,5 +1,9 @@
 class Product:
     """Класс для представления продуктов."""
+    name: str
+    description: str
+    price: float
+    quantity_in_stock: int
 
     def __init__(
             self, name, description,
@@ -7,12 +11,15 @@ class Product:
     ):
         self.name = name
         self.description = description
-        self.price = price
+        self.price = round(price, 2)
         self.quantity_in_stock = quantity_in_stock
 
 
 class Category:
     """Класс для представления категорий."""
+    name: str
+    description: str
+    goods: list[Product]
     categories_count = 0
     unique_names = set()
 

@@ -58,7 +58,7 @@ def json_file():
 
 
 def test_category():
-    product1 = Product("Кроссовки", "Спортивные", 5000, 100)
+    product1 = Product("Кроссовки", "Спортивные", 5000.553, 100)
     product2 = Product("Рубашка", "Офисная", 1500, 50)
     product3 = Product("Кроссовки", "Спортивные", 5000, 100)
     product4 = Product("Ботинки", "Повседневные", 7500, 2)
@@ -68,7 +68,7 @@ def test_category():
     assert category1.description == "Все для ног"
     assert category1.goods[0].name == "Кроссовки"
     assert category1.goods[0].description == "Спортивные"
-    assert category1.goods[0].price == 5000
+    assert category1.goods[0].price == 5000.55
     assert category1.goods[0].quantity_in_stock == 100
     assert category1.goods[1].name == "Рубашка"
     assert category1.goods[1].description == "Офисная"
