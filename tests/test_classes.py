@@ -4,7 +4,8 @@ from pathlib import Path
 
 import pytest
 
-from my_shop.classes import Category, Product
+from my_shop.category import Category
+from my_shop.product import Product
 from my_shop.utilities import load_data_from_json
 
 
@@ -62,7 +63,7 @@ def json_file():
 def test_category():
     product1 = Product("Кроссовки", "Спортивные", 5000.553, 100)
     product2 = Product("Рубашка", "Офисная", 1500, 50)
-    product3 = Product("Кроссовки", "Спортивные", 5000, 100)
+    product3 = Product("Кроссовки", "Спортивные", 5000.553, 100)
     product4 = Product("Ботинки", "Повседневные", 7500, 2)
     category1 = Category("Обувь", "Все для ног", [product1, product2])
     category2 = Category("Одежда", "Все для тела", [product3, product4])
@@ -78,8 +79,8 @@ def test_category():
     assert category1.goods[1].quantity_in_stock == 50
     assert category2.name == "Одежда"
     assert category2.description == "Все для тела"
-    assert Category.categories_count == 2
-    assert Category.get_unique_names_count() == 3
+    assert Category.count_categories == 2
+    assert Category.count_unique_products == 4
 
 
 def test_product():

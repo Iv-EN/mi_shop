@@ -1,6 +1,8 @@
 import json
 import os
-from .classes import Category, Product
+
+from .category import Category
+from .product import Product
 
 MAIN_PATH = os.path.dirname(__file__)
 OPERATIONS_PATH = os.path.join(MAIN_PATH, 'data', 'products.json')
