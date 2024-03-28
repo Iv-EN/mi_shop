@@ -6,7 +6,7 @@ import pytest
 
 from my_shop.category import Category
 from my_shop.product import Product
-from my_shop.utilities import load_data_from_json
+from my_shop.utils import load_data_from_json
 
 
 @pytest.fixture
