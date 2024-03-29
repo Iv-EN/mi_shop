@@ -17,10 +17,11 @@ class Category:
         Category.unique_products.update(set(self.__goods))
         Category.count_unique_products = len(Category.unique_products)
 
+    @classmethod
     def add_product(self, product: Product):
         """
         Добавляет продукт в список товаров категории
-        и обновляет уникалльные продукты.
+        и обновляет уникальные продукты.
         """
         if product not in self.__goods:
             self.__goods.append(product)
@@ -32,6 +33,7 @@ class Category:
         """Возвращает список товаров категории."""
         return self.__goods
 
+    @property
     def get_goods(self):
         """Возвращает строковую информацию о товаров в категории."""
         goods_list = []
