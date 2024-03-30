@@ -1,3 +1,4 @@
+import pytest
 from my_shop.product import Product
 
 
@@ -9,13 +10,33 @@ def test_product():
     assert product1.quantity_in_stock == 100
 
     product_list = []
-    product2 = Product.create_or_update_product(
-        "Батон", "Нарезной", 52, 100, product_list
-    )
+    product_data1 = {
+        "name": "Батон",
+        "description": "Нарезной",
+        "price": 52,
+        "quantity_in_stock": 100
+    }
+    product_data2 = {
+        "name": "Батон",
+        "description": "Молочный",
+        "price": 54.25,
+        "quantity_in_stock": 75
+    }
+    product2 = Product.create_or_update_product(product_data1, product_list)
     assert product2.name == "Батон"
+    assert product2.price == 52
+    assert product2.description == "Нарезной"
     assert product2.quantity_in_stock == 100
-    product3 = Product.create_or_update_product(  # noqa
-        "Батон", "Молочный", 54.25, 75, product_list
-    )
+    product3 = Product.create_or_update_product(product_data2, product_list)  # noqa
     assert product2.price == 54.25
     assert product2.quantity_in_stock == 175
+
+    product_data3 = {
+        "name": "тест",
+        "description": "проверка отрицательной цены",
+        "price": -54.25,
+        "quantity_in_stock": 75
+    }
+    with pytest.raises(ValueError) as error:
+        Product.create_or_update_product(product_data3, product_list)
+    assert str(error.value) == "Цена не может быть отрицательной"
