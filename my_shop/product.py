@@ -19,12 +19,12 @@ class Product:
         В случае, если товар с таким именем есть в списке,
         обновляет его количество и выбирает наибольшую цену.
         """
-        name = product_data['name']
+        name = product_data["name"]
         for product in products_list:
             if product.name == name:
-                product.quantity_in_stock += product_data['quantity_in_stock']
+                product.quantity_in_stock += product_data["quantity_in_stock"]
                 product.price = max(
-                    product.price, round(product_data['price'], 2))
+                    product.price, round(product_data["price"], 2))
                 return product
         new_product = cls(**product_data)
         products_list.append(new_product)

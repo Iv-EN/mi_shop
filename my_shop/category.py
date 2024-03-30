@@ -39,7 +39,7 @@ class Category:
         goods_list = []
         for good in self.__goods:
             goods_list.append(
-                f'{good.name},'
-                f' {good.price} руб. Остаток: {good.quantity_in_stock} шт.'
+                f"{good.name},"
+                f" {good.price} руб. Остаток: {good.quantity_in_stock} шт."
             )
         return goods_list
