@@ -7,3 +7,15 @@ def test_product():
     assert product1.description == "Спортивные"
     assert product1.price == 5000
     assert product1.quantity_in_stock == 100
+
+    product_list = []
+    product2 = Product.create_or_update_product(
+        "Батон", "Нарезной", 52, 100, product_list
+    )
+    assert product2.name == "Батон"
+    assert product2.quantity_in_stock == 100
+    product3 = Product.create_or_update_product(  # noqa
+        "Батон", "Молочный", 54.25, 75, product_list
+    )
+    assert product2.price == 54.25
+    assert product2.quantity_in_stock == 175

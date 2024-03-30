@@ -23,3 +23,10 @@ def test_category():
     assert category2.description == "Все для тела"
     assert Category.count_categories == 2
     assert Category.count_unique_products == 4
+
+    actual_goods = category1.get_goods
+    expected_goods = [
+        "Кроссовки, 5000.55 руб. Остаток: 100 шт.",
+        "Рубашка, 1500 руб. Остаток: 50 шт."
+    ]
+    assert actual_goods == expected_goods
