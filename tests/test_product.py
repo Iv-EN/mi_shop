@@ -1,4 +1,3 @@
-import pytest
 from my_shop.product import Product
 
 
@@ -31,12 +30,15 @@ def test_product():
     assert product2.price == 54.25
     assert product2.quantity_in_stock == 175
 
+
+def test_product_price_negative(capsys):
+    product_list = []
     product_data3 = {
         "name": "тест",
         "description": "проверка отрицательной цены",
         "price": -54.25,
         "quantity_in_stock": 75
     }
-    with pytest.raises(ValueError) as error:
-        Product.create_or_update_product(product_data3, product_list)
-    assert str(error.value) == "Цена не может быть отрицательной"
+    Product.create_or_update_product(product_data3, product_list)
+    captured = capsys.readouterr()
+    assert "Цена не может быть отрицательной" in captured.out

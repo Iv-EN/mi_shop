@@ -39,5 +39,6 @@ class Product:
     def price(self, value):
         """Сеттер для цены продукта."""
         if value < 0:
-            raise ValueError("Цена не может быть отрицательной")
-        self.__price = round(value, 2)
+            print("Цена не может быть отрицательной")
+        else:
+            self.__price = round(value, 2)
