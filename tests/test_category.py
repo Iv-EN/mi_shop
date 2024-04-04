@@ -30,3 +30,5 @@ def test_category():
         "Рубашка, 1500 руб. Остаток: 50 шт."
     ]
     assert actual_goods == expected_goods
+    assert len(category1) == 150
+    assert str(category2) == "Одежда, количество продуктов: 102 шт."
