@@ -7,7 +7,8 @@ class Product:
     ):
         self.name: str = name
         self.description: str = description
-        self.price: float = round(price, 2)
+        self.__price: float = None
+        self.price = price
         self.quantity_in_stock: int = quantity_in_stock
 
     def __str__(self) -> str:
@@ -30,18 +31,32 @@ class Product:
 
     @classmethod
     def create_or_update_product(
-            cls, name, description, price,
-            quantity_in_stock, products_list: list):
+            cls, product_data: dict, products_list: list):
         """
         Создаёт товар или обновляет существующий в списке `products_list`
         В случае, если товар с таким именем есть в списке,
         обновляет его количество и выбирает наибольшую цену.
         """
+        name = product_data["name"]
         for product in products_list:
             if product.name == name:
-                product.quantity_in_stock += quantity_in_stock
-                product.price = max(product.price, round(price, 2))
+                product.quantity_in_stock += product_data["quantity_in_stock"]
+                product.price = max(
+                    product.price, round(product_data["price"], 2))
                 return product
-        new_product = cls(name, description, price, quantity_in_stock)
+        new_product = cls(**product_data)
         products_list.append(new_product)
         return new_product
+
+    @property
+    def price(self):
+        """Геттер для цены проодукта."""
+        return self.__price
+
+    @price.setter
+    def price(self, value):
+        """Сеттер для цены продукта."""
+        if value < 0:
+            print("Цена не может быть отрицательной")
+        else:
+            self.__price = round(value, 2)

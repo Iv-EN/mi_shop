@@ -10,15 +10,38 @@ def test_product():
     assert product1.quantity_in_stock == 100
 
     product_list = []
-    product2 = Product.create_or_update_product(
-        "Батон", "Нарезной", 52, 100, product_list
-    )
+    product_data1 = {
+        "name": "Батон",
+        "description": "Нарезной",
+        "price": 52,
+        "quantity_in_stock": 100
+    }
+    product_data2 = {
+        "name": "Батон",
+        "description": "Молочный",
+        "price": 54.25,
+        "quantity_in_stock": 75
+    }
+    product2 = Product.create_or_update_product(product_data1, product_list)
     assert product2.name == "Батон"
+    assert product2.price == 52
+    assert product2.description == "Нарезной"
     assert product2.quantity_in_stock == 100
-    product3 = Product.create_or_update_product(  # noqa
-        "Батон", "Молочный", 54.25, 75, product_list
-    )
+    product3 = Product.create_or_update_product(product_data2, product_list)  # noqa
     assert product2.price == 54.25
     assert product2.quantity_in_stock == 175
     assert str(product1) == "Кроссовки, 5000 руб. Остаток: 100 шт."
     assert product1 + product4 == 505200
+
+def test_product_price_negative(capsys):
+    product_list = []
+    product_data3 = {
+        "name": "тест",
+        "description": "проверка отрицательной цены",
+        "price": -54.25,
+        "quantity_in_stock": 75
+    }
+    Product.create_or_update_product(product_data3, product_list)
+    captured = capsys.readouterr()
+    assert "Цена не может быть отрицательной" in captured.out
+
