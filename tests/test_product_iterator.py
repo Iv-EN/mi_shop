@@ -10,7 +10,6 @@ def test_product_iterator():
     product2 = Product("Ботинки", "Повседневные", 7500, 2)
     goods = [product1, product2]
     category1 = Category("Обувь", "Все для ног", goods)
-    category2 = Category("Обувь", "Все для ног", [])
     iterator = ProductIterator(category1)
     for good in goods:
         assert next(iterator) == good
