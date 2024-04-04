@@ -11,6 +11,24 @@ class Product:
         self.price = price
         self.quantity_in_stock: int = quantity_in_stock
 
+    def __str__(self) -> str:
+        return (
+            f"{self.name}, {self.price} руб. Остаток: "
+            f"{self.quantity_in_stock} шт."
+        )
+
+    def __add__(self, other):
+        if isinstance(other, Product):
+            return (
+                self.price * self.quantity_in_stock +
+                other.price * other.quantity_in_stock
+            )
+        else:
+            print(
+                "Слагаемые должны быть "
+                "объектами класса Product."
+            )
+
     @classmethod
     def create_or_update_product(
             cls, product_data: dict, products_list: list):

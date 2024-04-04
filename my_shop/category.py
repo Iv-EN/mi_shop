@@ -17,6 +17,15 @@ class Category:
         Category.unique_products.update(set(self.__goods))
         Category.count_unique_products = len(Category.unique_products)
 
+    def __str__(self):
+        return f"{self.name}, количество продуктов: {len(self)} шт."
+
+    def __len__(self):
+        number_of_products: int = 0
+        for good in self.__goods:
+            number_of_products += good.quantity_in_stock
+        return number_of_products
+
     @classmethod
     def add_product(self, product: Product):
         """
@@ -36,10 +45,4 @@ class Category:
     @property
     def get_goods(self):
         """Возвращает строковую информацию о товаров в категории."""
-        goods_list = []
-        for good in self.__goods:
-            goods_list.append(
-                f"{good.name},"
-                f" {good.price} руб. Остаток: {good.quantity_in_stock} шт."
-            )
-        return goods_list
+        return [str(product) for product in self.__goods]

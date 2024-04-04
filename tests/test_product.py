@@ -3,6 +3,7 @@ from my_shop.product import Product
 
 def test_product():
     product1 = Product("Кроссовки", "Спортивные", 5000, 100)
+    product4 = Product("Батон", "Нарезной", 52, 100)
     assert product1.name == "Кроссовки"
     assert product1.description == "Спортивные"
     assert product1.price == 5000
@@ -29,7 +30,8 @@ def test_product():
     product3 = Product.create_or_update_product(product_data2, product_list)  # noqa
     assert product2.price == 54.25
     assert product2.quantity_in_stock == 175
-
+    assert str(product1) == "Кроссовки, 5000 руб. Остаток: 100 шт."
+    assert product1 + product4 == 505200
 
 def test_product_price_negative(capsys):
     product_list = []
@@ -42,3 +44,4 @@ def test_product_price_negative(capsys):
     Product.create_or_update_product(product_data3, product_list)
     captured = capsys.readouterr()
     assert "Цена не может быть отрицательной" in captured.out
+
