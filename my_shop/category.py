@@ -3,6 +3,7 @@ from .product import Product
 
 class Category:
     """Класс для представления категорий."""
+
     count_categories = 0
     count_unique_products = 0
     unique_products = set()
@@ -26,14 +27,16 @@ class Category:
             number_of_products += good.quantity_in_stock
         return number_of_products
 
-    @classmethod
     def add_product(self, product: Product):
         """
         Добавляет продукт в список товаров категории
         и обновляет уникальные продукты.
         """
+        if not isinstance(product, Product):
+            print("Добавляемый объект должен быть наследником класса Product")
+            return
         if product not in self.__goods:
-            self.__goods.append(product)
+            self.goods.append(product)
             Category.unique_products.add(product)
             Category.count_unique_products = len(Category.unique_products)
 

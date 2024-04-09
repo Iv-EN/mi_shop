@@ -1,15 +1,13 @@
 class Product:
     """Класс для представления продуктов."""
 
-    def __init__(
-            self, name, description,
-            price, quantity_in_stock,
-    ):
+    def __init__(self, name, description, price, quantity_in_stock, color):
         self.name: str = name
         self.description: str = description
         self.__price: float = None
         self.price = price
         self.quantity_in_stock: int = quantity_in_stock
+        self.color = color
 
     def __str__(self) -> str:
         return (
@@ -18,22 +16,17 @@ class Product:
         )
 
     def __add__(self, other):
-        if isinstance(other, Product):
+        if type(self) is type(other):
             return (
-                self.price * self.quantity_in_stock +
-                other.price * other.quantity_in_stock
+                self.price * self.quantity_in_stock
+                + other.price * other.quantity_in_stock
             )
-        else:
-            print(
-                "Слагаемые должны быть "
-                "объектами класса Product."
-            )
+        raise TypeError("Товары разных классов складывать нельзя")
 
     @classmethod
-    def create_or_update_product(
-            cls, product_data: dict, products_list: list):
-        """
-        Создаёт товар или обновляет существующий в списке `products_list`
+    def create_or_update_product(cls, product_data: dict, products_list: list):
+        """Создаёт товар или обновляет существующий в списке `products_list`
+
         В случае, если товар с таким именем есть в списке,
         обновляет его количество и выбирает наибольшую цену.
         """
@@ -42,7 +35,8 @@ class Product:
             if product.name == name:
                 product.quantity_in_stock += product_data["quantity_in_stock"]
                 product.price = max(
-                    product.price, round(product_data["price"], 2))
+                    product.price, round(product_data["price"], 2)
+                )
                 return product
         new_product = cls(**product_data)
         products_list.append(new_product)
@@ -60,3 +54,37 @@ class Product:
             print("Цена не может быть отрицательной")
         else:
             self.__price = round(value, 2)
+
+
+class Smartphone(Product):
+    def __init__(
+        self,
+        name,
+        description,
+        price,
+        quantity_in_stock,
+        color,
+        performance,
+        model,
+        build_memory_capacity,
+    ):
+        super().__init__(name, description, price, quantity_in_stock, color)
+        self.performance = performance
+        self.model = model
+        self.build_memory_capacity = build_memory_capacity
+
+
+class LawnGrass(Product):
+    def __init__(
+        self,
+        name,
+        description,
+        price,
+        quantity_in_stock,
+        color,
+        manufacturer_country,
+        germination_period,
+    ):
+        super().__init__(name, description, price, quantity_in_stock, color)
+        self.manufacturer_country = manufacturer_country
+        self.germination_period = germination_period
