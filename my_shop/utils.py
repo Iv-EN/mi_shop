@@ -20,13 +20,14 @@ def load_data_from_json(filename):
                 name=product_data["name"],
                 description=product_data["description"],
                 price=product_data["price"],
-                quantity_in_stock=product_data["quantity"]
+                quantity_in_stock=product_data["quantity"],
+                color=product_data["color"],
             )
             products_in_category.append(product)
         category = Category(
             name=category_data["name"],
             description=category_data["description"],
-            goods=products_in_category
+            goods=products_in_category,
         )
         categories.append(category)
     return categories

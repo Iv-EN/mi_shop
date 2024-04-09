@@ -3,10 +3,12 @@ from my_shop.product import Product
 
 
 def test_category():
-    product1 = Product("Кроссовки", "Спортивные", 5000.553, 100)
-    product2 = Product("Рубашка", "Офисная", 1500, 50)
-    product3 = Product("Кроссовки", "Спортивные", 5000.553, 100)
-    product4 = Product("Ботинки", "Повседневные", 7500, 2)
+    product1 = Product("Кроссовки", "Спортивные", 5000.553, 100, "Белый")
+    product2 = Product("Рубашка", "Офисная", 1500, 50, "В клеточку")
+    product3 = Product(
+        "Кроссовки", "Спортивные", 5000.553, 100, "Белые с красным"
+    )
+    product4 = Product("Ботинки", "Повседневные", 7500, 2, "Коричневые")
     category1 = Category("Обувь", "Все для ног", [product1, product2])
     category2 = Category("Одежда", "Все для тела", [product3, product4])
     assert category1.name == "Обувь"
@@ -27,7 +29,7 @@ def test_category():
     actual_goods = category1.get_goods
     expected_goods = [
         "Кроссовки, 5000.55 руб. Остаток: 100 шт.",
-        "Рубашка, 1500 руб. Остаток: 50 шт."
+        "Рубашка, 1500 руб. Остаток: 50 шт.",
     ]
     assert actual_goods == expected_goods
     assert len(category1) == 150
