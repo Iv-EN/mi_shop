@@ -1,8 +1,12 @@
-class Product:
+from .abstract_classes import BaseClass, BaseProduct
+from .mixins import MixinObjectCreationInfo
+
+
+class Product(BaseClass, MixinObjectCreationInfo, BaseProduct):
     """Класс для представления продуктов."""
 
     def __init__(self, name, description, price, quantity_in_stock, color):
-        self.name: str = name
+        super().__init__(name)
         self.description: str = description
         self.__price: float = None
         self.price = price
