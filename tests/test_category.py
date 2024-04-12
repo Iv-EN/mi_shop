@@ -34,3 +34,11 @@ def test_category():
     assert actual_goods == expected_goods
     assert len(category1) == 150
     assert str(category2) == "Одежда, количество продуктов: 102 шт."
+    assert (
+        repr(category1) == "Category(name='Обувь', description='Все для ног',"
+        " _Category__goods=[Product(name='Кроссовки'"
+        ", description='Спортивные', _Product__price=5000.55,"
+        " quantity_in_stock=100, color='Белый'),"
+        " Product(name='Рубашка', description='Офисная', _Product__price=1500,"
+        " quantity_in_stock=50, color='В клеточку')])"
+    )

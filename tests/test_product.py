@@ -72,7 +72,7 @@ def test_product():
     assert product1 + product4 == 505200
 
 
-def test_product_price_negative(capsys):
+def test_product_price_negative(capsys: pytest.CaptureFixture[str]):
     product_list = []
     product_data3 = {
         "name": "тест",
@@ -88,10 +88,10 @@ def test_product_price_negative(capsys):
 
 def test_add_product_sucess(category: Category, sample_product: Product):
     """Проверка успешного добавления продукта в категорию."""
-    initial_product_count = len(category.goods)
+    initial_product_count = len(category.goods) + 1
     category.add_product(sample_product)
     assert sample_product in category.goods
-    assert len(category.goods) == initial_product_count + 1
+    assert len(category.goods) == initial_product_count
 
 
 def test_add_non_product(category, non_product):
@@ -121,3 +121,12 @@ def test_add_method_heir(sample_product, lawn_grass_product):
     """
     with pytest.raises(TypeError):
         sample_product + lawn_grass_product
+
+
+def test_mixin_info(sample_product):
+    """Проверка mixin."""
+    assert (
+        repr(sample_product)
+        == "Product(name='Тестовый продукт', description='Описание',"
+        " _Product__price=100, quantity_in_stock=10, color='Чёрный')"
+    )

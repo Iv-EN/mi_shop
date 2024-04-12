@@ -1,7 +1,9 @@
+from .abstract_classes import BaseClass
+from .mixins import MixinObjectCreationInfo
 from .product import Product
 
 
-class Category:
+class Category(BaseClass, MixinObjectCreationInfo):
     """Класс для представления категорий."""
 
     count_categories = 0
@@ -9,9 +11,9 @@ class Category:
     unique_products = set()
 
     def __init__(self, name, description, goods=None):
+        super().__init__(name)
         if goods is None:
             goods = []
-        self.name: str = name
         self.description: str = description
         self.__goods: list[Product] = goods
         Category.count_categories += 1
@@ -47,5 +49,5 @@ class Category:
 
     @property
     def get_goods(self):
-        """Возвращает строковую информацию о товаров в категории."""
+        """Возвращает строковую информацию о товарах в категории."""
         return [str(product) for product in self.__goods]
