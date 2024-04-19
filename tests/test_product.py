@@ -1,7 +1,7 @@
 import pytest
 
 from my_shop.category import Category
-from my_shop.product import Product, LawnGrass
+from my_shop.product import LawnGrass, Product
 
 
 @pytest.fixture
@@ -21,6 +21,11 @@ def non_product():
             pass
 
     return NonProduct()
+
+
+@pytest.fixture
+def zero_product():
+    return Product("Другой продукт", "Описание", 150, 0, "Белый")
 
 
 @pytest.fixture
@@ -94,12 +99,37 @@ def test_add_product_sucess(category: Category, sample_product: Product):
     assert len(category.goods) == initial_product_count
 
 
+def test_output_successful_product_addition(
+    category, sample_product, capsys: pytest.CaptureFixture[str]
+):
+    """Проверка вывода при успешной попытке добавить товар."""
+    category.add_product(sample_product)
+    captured = capsys.readouterr()
+    assert (
+        "Товар успешно добавлен в категорию\n"
+        "Обработка добавления товара завершена\n" in captured.out
+    )
+
+
 def test_add_non_product(category, non_product):
     """Проверка попытки добавить объект не являющийся продуктом."""
     initial_product_count = len(category.goods)
     category.add_product(non_product)
     assert non_product not in category.goods
     assert len(category.goods) == initial_product_count
+
+
+def test_add_zero_product(
+    category, zero_product, capsys: pytest.CaptureFixture[str]
+):
+    """Проверка попытки добавить товар с нулевым количеством."""
+    with pytest.raises(ValueError):
+        category.add_product(zero_product)
+    captured = capsys.readouterr()
+    assert (
+        "Товар с нулевым количеством не может быть добавлен в категорию\n"
+        "Обработка добавления товара завершена\n" in captured.out
+    )
 
 
 def test_add_method_sucess(sample_product, another_product):

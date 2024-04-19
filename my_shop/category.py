@@ -1,4 +1,5 @@
 from .abstract_classes import BaseClass
+from .exceptions import ZeroQuantityException
 from .mixins import MixinObjectCreationInfo
 from .product import Product
 
@@ -37,10 +38,34 @@ class Category(BaseClass, MixinObjectCreationInfo):
         if not isinstance(product, Product):
             print("Добавляемый объект должен быть наследником класса Product")
             return
-        if product not in self.__goods:
-            self.goods.append(product)
-            Category.unique_products.add(product)
-            Category.count_unique_products = len(Category.unique_products)
+        try:
+            if product.quantity_in_stock == 0:
+                raise ZeroQuantityException(
+                    "Товар с нулевым количеством не "
+                    "может быть добавлен в категорию"
+                )
+        except ZeroQuantityException as e:
+            print(e)
+            raise ValueError()
+        else:
+            if product not in self.__goods:
+                self.goods.append(product)
+                Category.unique_products.add(product)
+                Category.count_unique_products = len(Category.unique_products)
+            print("Товар успешно добавлен в категорию")
+        finally:
+            print("Обработка добавления товара завершена")
+
+    def get_average_price(self):
+        """Получает средний ценник всех товаров в категории."""
+        price_all_goods = 0
+        for good in self.__goods:
+            price_all_goods += good.price
+        try:
+            average_price = price_all_goods / len(self.__goods)
+        except ZeroDivisionError:
+            average_price = 0
+        return round(average_price, 2)
 
     @property
     def goods(self):
