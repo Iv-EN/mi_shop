@@ -1,5 +1,26 @@
+import pytest
+
 from my_shop.category import Category
 from my_shop.product import Product
+
+
+@pytest.fixture
+def sample_product():
+    return Product("Тестовый продукт", "Описание", 100, 10, "Чёрный")
+
+
+@pytest.fixture
+def another_product():
+    return Product("Другой продукт", "Описание", 150, 5, "Белый")
+
+
+@pytest.fixture
+def category_one():
+    return Category(
+        "Тестовая категория",
+        "Все чистого кода",
+        [sample_product, another_product],
+    )
 
 
 def test_category():
@@ -42,3 +63,11 @@ def test_category():
         " Product(name='Рубашка', description='Офисная', _Product__price=1500,"
         " quantity_in_stock=50, color='В клеточку')])"
     )
+    assert category1.get_average_price() == 3250.28
+    no_products = Category("Одежда", "Все для тела", [])
+    assert no_products.get_average_price() == 0
+
+
+# def test_get_average_price(category_one: Category):
+#    average_price = category_one.get_average_price()
+#    assert average_price == 125
