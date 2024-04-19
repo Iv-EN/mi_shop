@@ -24,4 +24,5 @@ def test_otrying_add_product_zero_quantity(
     with pytest.raises(ValueError):
         test_order = Order("Тестовый заказ", sample_product, 0)  # noga
     captured = capsys.readouterr()
-    assert "Количество товара в заказе не может быть нулевым" in captured.out
+    assert "Количество товара в заказе не может быть нулевым\n"
+    "Обработка добавления товара в заказ завершена\n" in captured.out
